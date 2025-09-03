@@ -1,0 +1,26 @@
+apiVersion: automation.cloudbees.io/v1alpha1
+kind: workflow
+name: jfrog-repo
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  jfrog-repo-job:
+    steps:
+      - name: checkout-source-code
+        uses: cloudbees-io/checkout@v1
+  
+      # Promote (Copy) docker image "test-image:1.0.0" from remote jfrog repository "jfrog-xray-test" to another remote jfrog repository "jfrog-test-docker-target-repo"
+      - name: jfrog-promote-actions
+        uses: cloudbees-io/jfrog-artifactory-promote-image@v1.0.15
+        with:
+          url: ${{ vars.JFROG_URL }}
+          username: ${{ vars.JFROG_ACTIONS_USERNAME }}
+          password: ${{ secrets.JFROG_ACTIONS_PASSWORD }}
+          source-repository-name: jfrog-xray-test
+          target-repository-name: jfrog-test-docker-target-repo
+          source-image-name: test-image
+          source-tag: '1.0.0'
+          copy: 'true'
