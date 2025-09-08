@@ -4,15 +4,13 @@ name: jfrog-repo
 on:
   push:
     branches:
-      - 'main'
-
+      - main
+  workflow_dispatch:
 jobs:
   jfrog-repo-job:
     steps:
       - name: checkout-source-code
         uses: cloudbees-io/checkout@v1
-  
-      # Promote (Copy) docker image "test-image:1.0.0" from remote jfrog repository "jfrog-xray-test" to another remote jfrog repository "jfrog-test-docker-target-repo"
       - name: jfrog-promote-actions
         uses: cloudbees-io/jfrog-artifactory-promote-image@v1
         with:
@@ -22,5 +20,5 @@ jobs:
           source-repository-name: jfrog-xray-test
           target-repository-name: jfrog-test-docker-target-repo
           source-image-name: test-image
-          source-tag: '1.0.0'
-          copy: 'true'
+          source-tag: 1.0.0
+          copy: "true"
