@@ -14,7 +14,7 @@ jobs:
   
       # Promote (Copy) docker image "test-image:1.0.0" from remote jfrog repository "jfrog-xray-test" to another remote jfrog repository "jfrog-test-docker-target-repo"
       - name: jfrog-promote-actions
-        uses: cloudbees-io/jfrog-artifactory-promote-image@v1.0.15
+        uses: cloudbees-io/jfrog-artifactory-promote-image@v1
         with:
           url: ${{ vars.JFROG_URL }}
           username: ${{ vars.JFROG_ACTIONS_USERNAME }}
